@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>循環滾動的切換圖片</title>
+    <script src="./fn.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: black;
+        }
+
+        h3 {
+            border: 1px solid rgb(145, 142, 142);
+            height: 50px;
+            width: 600px;
+            color: rgb(250, 248, 248);
+            margin: 50px auto;
+            text-align: center;
+            line-height: 50px;
+        }
+
+        #box {
+            width: 1000px;
+            height: 500px;
+            border: 5px solid rgb(168, 166, 166);
+            margin: 40px auto;
+            overflow: hidden;
+            position: relative;
+        }
+
+        #box ul {
+            list-style: none;
+            width: 2040px;
+            height: 480px;
+            position: absolute;
+            left: 0;
+        }
+
+        #box ul li {
+            width: 320px;
+            height: 480px;
+            margin: 10px;
+            float: left;
+        }
+
+        #box img {
+            width: 320px;
+            height: 480px;
+        }
+    </style>
+</head>
+
+<body>
+    <h3>循環滾動(無縫接軌)</h3>
+    <div id="box">
+        <ul>
+            <li>
+                <img src="./img/3_1.jpg" alt="">
+            </li>
+            <li>
+                <img src="./img/3_2.jpg" alt="">
+            </li>
+            <li>
+                <img src="./img/3_3.jpg" alt="">
+            </li>
+            <li>
+                <img src="./img/3_4.jpg" alt="">
+            </li>
+            <li>
+                <img src="./img/3_5.jpg" alt="">
+            </li>
+            <li>
+                <img src="./img/3_6.jpg" alt="">
+            </li>
+        </ul>
+    </div>
+
+    <script>
+        var oUl = document.getElementsByTagName('ul')[0]
+        // 添加一組相片
+        oUl.innerHTML += oUl.innerHTML
+        oUl.style.width = oUl.offsetWidth * 2 + 'px'
+        var timer = null
+        var i = 0
+
+        startTimer()
+
+        $('box').onmouseover = function () {
+            stopTimer()
+        }
+
+        $('box').onmouseout = function () {
+            startTimer()
+        }
+
+        function startTimer() {
+            if (timer == null) {
+                timer = setInterval(scrollImg, 20)
+            }
+        }
+
+        function stopTimer() {
+            clearInterval(timer)
+            timer = null
+        }
+
+        function scrollImg() {
+            oUl.style.left = oUl.offsetLeft - 3 +'px'
+
+            // 當開始播放第二組相片時進行回拉
+            if(oUl.offsetLeft<= -oUl.offsetWidth/2){
+                oUl.style.left = 0
+            }
+        }
+    </script>
+</body>
+
+</html>
